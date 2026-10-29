@@ -1,0 +1,16 @@
+# Modern GUI Framework
+customtkinter>=5.2.0
+pillow>=10.0.0
+
+# Voucher QR Code Generation
+qrcode[pil]>=7.4.2
+
+# Network & System Utilities
+psutil>=5.9.0
+
+# Captive Portal & Web Server for Authentication
+Flask>=3.0.0
+requests>=2.31.0
+
+# Packaging (also in CI)
+pyinstaller>=6.3.0

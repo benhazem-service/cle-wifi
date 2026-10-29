@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بوابة تسجيل دخول الواي فاي | WiFi Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #090d16;
+            --bg-card: rgba(18, 26, 43, 0.85);
+            --border-color: rgba(59, 130, 246, 0.25);
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --success: #10b981;
+            --success-glow: rgba(16, 185, 129, 0.3);
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.18), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.12), transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .portal-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2rem 1.75rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(59, 130, 246, 0.15);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #10b981, #6366f1);
+        }
+
+        .brand-badge {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(16, 185, 129, 0.2));
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            animation: pulse-glow 3s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); }
+            100% { transform: scale(1.04); box-shadow: 0 0 25px rgba(16, 185, 129, 0.4); }
+        }
+
+        .shop-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.5px;
+        }
+
+        .shop-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.75rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.25rem;
+            text-align: right;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .code-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(59, 130, 246, 0.4);
+            border-radius: 14px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #38bdf8;
+            text-align: center;
+            letter-spacing: 4px;
+            font-family: 'Inter', monospace;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .code-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            background: #0f172a;
+        }
+
+        .code-input::placeholder {
+            color: rgba(148, 163, 184, 0.4);
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.95rem;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 18px -4px rgba(37, 99, 235, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -4px rgba(37, 99, 235, 0.6);
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.25rem 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+        }
+
+        .divider span {
+            padding: 0 0.75rem;
+        }
+
+        .btn-scan {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-scan:hover {
+            background: rgba(51, 65, 85, 0.8);
+            color: #fff;
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        /* Camera Scanner Modal */
+        #scanner-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .scanner-box {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            height: 320px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #3b82f6;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+        }
+
+        #scanner-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 2px solid rgba(16, 185, 129, 0.8);
+            border-radius: 16px;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        .scanner-laser {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 90%;
+            height: 2px;
+            background: #10b981;
+            box-shadow: 0 0 10px #10b981;
+            animation: laser-scan 2s infinite ease-in-out alternate;
+        }
+
+        @keyframes laser-scan {
+            0% { top: 10%; }
+            100% { top: 90%; }
+        }
+
+        /* Alert Box */
+        .alert {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: none;
+            text-align: right;
+            line-height: 1.5;
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+
+        .alert.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #6ee7b7;
+        }
+
+        /* Active Session Screen */
+        #active-session-container {
+            display: none;
+            background: rgba(15, 23, 42, 0.75);
+            border: 2px solid var(--success);
+            border-radius: 18px;
+            padding: 1.5rem 1.25rem;
+            box-shadow: 0 0 30px var(--success-glow);
+        }
+
+        .session-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .countdown-time {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #34d399;
+            font-family: 'Inter', monospace;
+            letter-spacing: 2px;
+            margin: 0.75rem 0;
+            text-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+        }
+
+        .session-info {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            text-align: right;
+            line-height: 1.9;
+        }
+
+        .session-info-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .status-pill {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .footer-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 1.25rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="portal-card">
+        <!-- Logo / Icon -->
+        <div class="brand-badge" id="disp-icon">📶</div>
+        <h1 class="shop-title" id="disp-shop-name">WiFi Shop Manager</h1>
+        <p class="shop-subtitle" id="disp-shop-sub">بوابة تفعيل جلسة الواي فاي السريعة</p>
+
+        <!-- Alert Notification -->
+        <div id="alert-box" class="alert"></div>
+
+        <!-- FORM: Enter PIN/Code -->
+        <div id="login-form-container">
+            <form id="voucher-form" onsubmit="handleLoginSubmit(event)">
+                <div class="input-group">
+                    <label class="input-label" for="input-code">🔑 أدخل الرقم السري الموجود في تذكرتك:</label>
+                    <input type="text" id="input-code" class="code-input" placeholder="مثال: 684219" autocomplete="off" autofocus required>
+                </div>
+
+                <button type="submit" class="btn-submit" id="btn-submit-code">
+                    <span>🚀</span> تفعيل الإنترنت والبدء فوراً
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>أو يمكنك مسح التذكرة بالكاميرا</span>
+            </div>
+
+            <button type="button" class="btn-scan" onclick="startCameraScanner()">
+                <span>📷</span> فتح الكاميرا لمسح باركود التذكرة
+            </button>
+
+            <p class="footer-note">
+                * كل كود يُستعمل مرة واحدة فقط ويمنحك وصولاً سريعاً بالمدة المحددة.<br>
+                إذا لم يكن لديك رقم سري، يرجى طلبه من إدارة المحل.
+            </p>
+        </div>
+
+        <!-- ACTIVE SESSION VIEW (Shown upon activation) -->
+        <div id="active-session-container">
+            <div class="session-icon">🎉</div>
+            <h2 style="color: #34d399; font-size: 1.25rem; font-weight: 800; margin-bottom: 0.25rem;">تم تفعيل الإنترنت لجهازك!</h2>
+            <p style="color: var(--text-muted); font-size: 0.8rem;">يمكنك الآن تصفح المواقع واستخدام التطبيقات بحرية.</p>
+
+            <div class="countdown-time" id="disp-countdown">59:59</div>
+
+            <div class="session-info">
+                <div class="session-info-row">
+                    <span style="color: var(--text-muted);">حالة الاتصال:</span>
+                    <span class="status-pill">متصل بالإنترنت ✅</span>
+                </div>
+                <div class="session-info-row">
+                    <span style="color: var(--text-muted);">الرقم السري المفعل:</span>
+                    <strong style="color: #38bdf8; font-family: monospace;" id="disp-active-code">------</strong>
+                </div>
+                <div class="session-info-row">
+                    <span style="color: var(--text-muted);">وقت انتهاء الصلاحية:</span>
+                    <span style="color: #cbd5e1;" id="disp-expires-at">--:--</span>
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="testConnection()" style="background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255,255,255,0.15); box-shadow: none;">
+                <span>🌐</span> فتح جوجل وتجربة الاتصال
+            </button>
+        </div>
+    </div>
+
+    <!-- Camera Scanner Fullscreen Modal -->
+    <div id="scanner-modal">
+        <h3 style="color: #fff; margin-bottom: 1rem; font-size: 1.1rem;">وجه الكاميرا نحو باركود التذكرة</h3>
+        <div class="scanner-box">
+            <video id="scanner-video" playsinline></video>
+            <div class="scanner-overlay">
+                <div class="scanner-laser"></div>
+            </div>
+        </div>
+        <button type="button" class="btn-scan" onclick="stopCameraScanner()" style="max-width: 200px; margin-top: 1.5rem; background: #ef4444; color: #fff; border: none;">
+            <span>❌</span> إلغاء المسح
+        </button>
+    </div>
+
+    <script>
+        let countdownTimer = null;
+        let videoStream = null;
+
+        // Auto load status on start
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchShopStatus();
+            checkExistingSession();
+            
+            // Check URL for code parameter (e.g. ?code=123456)
+            const urlParams = new URLSearchParams(window.location.search);
+            const codeParam = urlParams.get('code') || urlParams.get('voucher');
+            if (codeParam) {
+                document.getElementById('input-code').value = codeParam.trim();
+                setTimeout(() => {
+                    handleLoginWithCode(codeParam.trim());
+                }, 400);
+            }
+        });
+
+        async function fetchShopStatus() {
+            try {
+                const res = await fetch('/api/status');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.shop_name) {
+                        document.getElementById('disp-shop-name').innerText = data.shop_name;
+                        document.title = data.shop_name + " | بوابة الواي فاي";
+                    }
+                    if (data.ssid) {
+                        document.getElementById('disp-shop-sub').innerText = "بوابة شبكة: " + data.ssid;
+                    }
+                }
+            } catch (e) {}
+        }
+
+        function checkExistingSession() {
+            const saved = localStorage.getItem('wifi_active_session');
+            if (saved) {
+                try {
+                    const sess = JSON.parse(saved);
+                    const now = new Date();
+                    const exp = new Date(sess.expires_at);
+                    if (exp > now) {
+                        showActiveSession(sess);
+                    } else {
+                        localStorage.removeItem('wifi_active_session');
+                    }
+                } catch (e) {
+                    localStorage.removeItem('wifi_active_session');
+                }
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('input-code');
+            const code = input.value.trim();
+            if (!code) return;
+            await handleLoginWithCode(code);
+        }
+
+        async function handleLoginWithCode(code) {
+            const btn = document.getElementById('btn-submit-code');
+            const alertBox = document.getElementById('alert-box');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span>⏳</span> جاري التحقق وتفعيل الإنترنت...';
+            alertBox.style.display = 'none';
+
+            try {
+                const res = await fetch('/api/portal/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: code })
+                });
+
+                const data = await res.json();
+                if (data.success && data.voucher) {
+                    // Save session to localStorage
+                    localStorage.setItem('wifi_active_session', JSON.stringify(data.voucher));
+                    showActiveSession(data.voucher);
+                } else {
+                    showAlert(data.message || 'الرقم السري غير صحيح، يرجى المحاولة مرة أخرى.', 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>🚀</span> تفعيل الإنترنت والبدء فوراً';
+                }
+            } catch (err) {
+                showAlert('تعذر الاتصال بالخادم المحلي. تأكد من أنك متصل بشبكة الواي فاي.', 'error');
+                btn.disabled = false;
+                btn.innerHTML = '<span>🚀</span> تفعيل الإنترنت والبدء فوراً';
+            }
+        }
+
+        function showAlert(msg, type) {
+            const box = document.getElementById('alert-box');
+            box.className = 'alert ' + type;
+            box.innerText = msg;
+            box.style.display = 'block';
+        }
+
+        function showActiveSession(voucher) {
+            document.getElementById('login-form-container').style.display = 'none';
+            document.getElementById('alert-box').style.display = 'none';
+            document.getElementById('active-session-container').style.display = 'block';
+
+            document.getElementById('disp-active-code').innerText = voucher.code;
+
+            const expDate = new Date(voucher.expires_at);
+            document.getElementById('disp-expires-at').innerText = expDate.toLocaleTimeString('ar-MA', { hour: '2-digit', minute: '2-digit' });
+
+            startCountdown(expDate);
+        }
+
+        function startCountdown(expDate) {
+            if (countdownTimer) clearInterval(countdownTimer);
+
+            function update() {
+                const now = new Date();
+                const diffSec = Math.floor((expDate - now) / 1000);
+
+                if (diffSec <= 0) {
+                    document.getElementById('disp-countdown').innerText = "00:00";
+                    clearInterval(countdownTimer);
+                    showAlert('انتهت مدة صلاحية قسيمتك. يرجى طلب كود جديد للمتابعة.', 'error');
+                    localStorage.removeItem('wifi_active_session');
+                    setTimeout(() => {
+                        document.getElementById('active-session-container').style.display = 'none';
+                        document.getElementById('login-form-container').style.display = 'block';
+                        document.getElementById('btn-submit-code').disabled = false;
+                        document.getElementById('btn-submit-code').innerHTML = '<span>🚀</span> تفعيل الإنترنت والبدء فوراً';
+                    }, 2500);
+                    return;
+                }
+
+                const m = Math.floor(diffSec / 60);
+                const s = diffSec % 60;
+                document.getElementById('disp-countdown').innerText = 
+                    (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+            }
+
+            update();
+            countdownTimer = setInterval(update, 1000);
+        }
+
+        function testConnection() {
+            window.location.href = "https://www.google.com";
+        }
+
+        /* Camera Barcode / QR Scanner using native BarcodeDetector API if available */
+        async function startCameraScanner() {
+            const modal = document.getElementById('scanner-modal');
+            const video = document.getElementById('scanner-video');
+
+            try {
+                videoStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { ideal: "environment" } },
+                    audio: false
+                });
+                video.srcObject = videoStream;
+                video.setAttribute("playsinline", true);
+                video.play();
+                modal.style.display = 'flex';
+
+                // Start scan loop
+                scanLoop();
+            } catch (err) {
+                alert('تعذر فتح الكاميرا: ' + err.message + '\nيمكنك كتابة الرقم السري يدوياً.');
+            }
+        }
+
+        function stopCameraScanner() {
+            if (videoStream) {
+                videoStream.getTracks().forEach(t => t.stop());
+                videoStream = null;
+            }
+            document.getElementById('scanner-modal').style.display = 'none';
+        }
+
+        async function scanLoop() {
+            if (!videoStream) return;
+            const video = document.getElementById('scanner-video');
+
+            // If browser supports BarcodeDetector
+            if ('BarcodeDetector' in window) {
+                try {
+                    const detector = new BarcodeDetector({ formats: ['qr_code', 'code_128', 'code_39', 'ean_13'] });
+                    const barcodes = await detector.detect(video);
+                    if (barcodes.length > 0) {
+                        const raw = barcodes[0].rawValue;
+                        handleScannedCode(raw);
+                        return;
+                    }
+                } catch (e) {}
+            }
+
+            if (videoStream) {
+                requestAnimationFrame(scanLoop);
+            }
+        }
+
+        function handleScannedCode(raw) {
+            stopCameraScanner();
+            let code = raw.trim();
+            // If raw text is URL like http://.../?code=123456
+            if (code.includes('code=')) {
+                try {
+                    const u = new URL(code);
+                    code = u.searchParams.get('code') || code;
+                } catch (e) {
+                    const parts = code.split('code=');
+                    if (parts.length > 1) code = parts[1].split('&')[0];
+                }
+            }
+            document.getElementById('input-code').value = code;
+            handleLoginWithCode(code);
+        }
+    </script>
+</body>
+</html>

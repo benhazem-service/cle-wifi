@@ -1,0 +1,20 @@
+29/10/2026 00:50:35 [START] Main entered with args: 
+29/10/2026 00:50:35 [INFO] IsAdmin=False, IsHeadless=False
+29/10/2026 00:50:35 [INFO] Server started on port 8080
+29/10/2026 01:16:41 [START] Main entered with args: 
+29/10/2026 01:16:41 [INFO] IsAdmin=False, IsHeadless=False
+29/10/2026 01:16:42 [INFO] Server started on port 8080
+29/10/2026 01:17:31 [START] Main entered with args: 
+29/10/2026 01:17:31 [MUTEX] Already running, activating browser and exiting.
+[29/10/2026 03:46:37] Starting WiFiShopManager_v2 (Args: --headless)
+AppState loaded. Starting LocalHttpServer on port 8080...
+LocalHttpServer started successfully.
+Running in headless mode. Entering wait loop.
+[29/10/2026 03:48:53] Starting WiFiShopManager_v2 (Args: --headless)
+AppState loaded. Starting LocalHttpServer on port 8080...
+LocalHttpServer started successfully.
+Running in headless mode. Entering wait loop.
+[29/10/2026 03:49:59] Starting WiFiShopManager_v2 (Args: --headless)
+AppState loaded. Starting LocalHttpServer on port 8080...
+LocalHttpServer started successfully.
+Running in headless mode. Entering wait loop.
